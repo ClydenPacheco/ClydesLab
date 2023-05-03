@@ -1,0 +1,3 @@
+This folder contains all the C programs I wrote in class 11 as part of our Computer Science practicals (2018-2019).
+I first started programming this year and it opened up a world of possibilities to me.
+Still didn't know how far I'd go and where I'd end, but determined it would be a fun jouney
