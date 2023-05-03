@@ -1,1 +1,0 @@
-This folder contains all the C++ programs I wrote in class 12 (2019)
