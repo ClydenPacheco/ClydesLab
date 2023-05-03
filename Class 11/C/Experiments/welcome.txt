@@ -1,0 +1,1 @@
+This folder contains all the C programs I wrote in class 11 as part of our Computer Science practicals (2018)
