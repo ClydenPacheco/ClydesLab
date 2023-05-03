@@ -1,1 +1,2 @@
-
+This folder contains all the C++ programs I wrote in class 12 (2019-2020).
+At this point I was really starting to enjoy programming. It almost felt like a hobby
