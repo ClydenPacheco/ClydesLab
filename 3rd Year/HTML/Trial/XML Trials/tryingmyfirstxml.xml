@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="books.xsl"?>
+<books>
+  <book>
+    <title>Harry Potter and the Philosopher's Stone</title>
+    <author>J.K. Rowling</author>
+    <price>12.99</price>
+    <quantity>10</quantity>
+  </book>
+  <book>
+    <title>The Hitchhiker's Guide to the Galaxy</title>
+    <author>Douglas Adams</author>
+    <price>9.99</price>
+    <quantity>5</quantity>
+  </book>
+  <book>
+    <title>The Lord of the Rings</title>
+    <author>J.R.R. Tolkien</author>
+    <price>19.99</price>
+    <quantity>3</quantity>
+  </book>
+</books>
