@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="SumApp">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-controller="SumController">
+            <h1>Find sum</h1>
+            <label for="num1">Enter num 1: </label>
+            <input type="number" ng-model="number1" id="num1"><br>
+            <label for="num2">Enter num 2: </label>
+            <input type="number" ng-model="number2" id="num2"><br>
+            <button ng-click="AddNumbers()">Add</button>
+            <p>{{sum}}</p>
+        </div>
+        <script>
+            angular.module('SumApp',[])
+            .controller('SumController',function($scope){
+                $scope.AddNumbers=function(){
+                    var num1=$scope.number1;
+                    var num2=$scope.number2;
+                    $scope.sum=num1+num2;
+                }
+            })
+        </script>
+    </body>
+</html>

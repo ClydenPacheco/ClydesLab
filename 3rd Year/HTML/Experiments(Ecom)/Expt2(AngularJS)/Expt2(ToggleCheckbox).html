@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Checkbox Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="CheckboxController">
+        <h1>Checkbox Example</h1>
+        <input type="checkbox" ng-model="isChecked">
+        <br>
+        <button ng-click="toggleCheckbox()">Toggle Checkbox</button>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('CheckboxController', function($scope) {
+            $scope.isChecked = true;
+
+            $scope.toggleCheckbox = function() {
+                $scope.isChecked = !$scope.isChecked;
+            };
+        });
+    </script>
+</body>
+</html>

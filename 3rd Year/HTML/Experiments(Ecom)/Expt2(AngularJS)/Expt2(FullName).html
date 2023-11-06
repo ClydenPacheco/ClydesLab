@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+    <head>
+        <script src="angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-controller="nameController">
+            <h1>Print full name:</h1>
+            <label for="firstname">First name:</label>
+            <input type="text" ng-model="first" id="firstname"><br>
+            <label for="secondname">Second name:</label>
+            <input type="text" ng-model="second" id="secondname"><br>
+            <button ng-click="FullName()">Print</button>
+            <p>Full name: {{fn}}</p>
+        </div>
+        <script>
+            angular.module('MyApp',[])
+            .controller('nameController',function($scope){
+                $scope.FullName=function(){
+                    var fn=$scope.first;
+                    var sn=$scope.second;
+                    $scope.fn=fn+" "+sn;
+                };
+            });
+        </script>
+    </body>
+</html>

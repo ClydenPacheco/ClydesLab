@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <style>
+            p{
+                display: inline;
+            }
+        </style>
+        <script>
+            function roundnum(){
+                let x=document.getElementById("numb").value;
+                let roundedNumber=Math.round(x);
+                document.getElementById("roundnum").innerHTML=roundedNumber;
+            }
+            function randomnum(){
+                let randomNumber=Math.random();
+                document.getElementById("randomnum").innerHTML=randomNumber;
+            }
+        </script>
+    </head>
+    <body>
+        Enter Number: <input id="numb">
+        <button type="button" onclick="roundnum()">Round</button><br>
+        Rounded Number: <p id="roundnum"></p><br><br>
+        Random Number:
+        <button type="button" onclick="randomnum()">Generate</button><br>        
+        Random Number: <p id="randomnum"></p>
+    </body>
+</html>

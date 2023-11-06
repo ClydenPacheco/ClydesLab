@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Radio Button Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="RadioButtonController">
+        <h1>Radio Button Example</h1>
+        <label>
+            <input type="radio" ng-model="selectedOption" value="option1"> Option 1
+        </label>
+        <br>
+        <label>
+            <input type="radio" ng-model="selectedOption" value="option2"> Option 2
+        </label>
+        <br>
+        <button ng-click="setOption('option1')">Set Option 1</button>
+        <button ng-click="setOption('option2')">Set Option 2</button>
+        <p>Selected Option: {{ selectedOption }}</p>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('RadioButtonController', function($scope) {
+            $scope.setOption = function(option) {
+                $scope.selectedOption = option;
+            };
+        });
+    </script>
+</body>
+</html>

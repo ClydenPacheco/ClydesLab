@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Hide Element Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="HideElementController">
+        <h1>Hide Element Example</h1>
+        <button ng-click="hideElement()">Hide Element</button>
+        <br>
+        <p ng-hide="isElementHidden">This is the element to hide.</p>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('HideElementController', function($scope) {
+            $scope.isElementHidden = false;
+
+            $scope.hideElement = function() {
+                $scope.isElementHidden = !$scope.isElementHidden;
+            };
+        });
+    </script>
+</body>
+</html>

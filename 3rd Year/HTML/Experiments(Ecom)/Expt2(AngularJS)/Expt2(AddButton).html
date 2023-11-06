@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Dynamic Button Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+</head>
+<body>
+    <div ng-controller="ButtonController">
+        <h1>Dynamic Button Example</h1>
+        <button ng-click="createButton()">Create Button</button>
+        <br>
+        <div ng-repeat="button in buttons">
+            <button ng-click="buttonClick(button)">{{ button.label }}</button>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('ButtonController', function($scope) {
+            $scope.buttons = [];
+
+            $scope.createButton = function() {
+                var buttonLabel = 'Button ' + ($scope.buttons.length + 1);
+                var button = {
+                    label: buttonLabel
+                };
+                $scope.buttons.push(button);
+            };
+
+            $scope.buttonClick = function(button) {
+                alert(button.label + ' clicked!');
+            };
+        });
+    </script>
+</body>
+</html>

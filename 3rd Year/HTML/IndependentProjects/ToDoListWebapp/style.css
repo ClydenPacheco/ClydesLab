@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+body {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(134deg, #00246b, #8000a0);
+    padding: 1.5%;
+}
+.todo-app {
+    background: #fff;
+    width: 54%;
+    max-width: 600px;
+    margin: 23vh auto 2%;
+    padding: 4% 3% 7%;
+    border-radius: 1em;
+}
+.todo-app h2 {
+    color: #140d7a;
+    display: flex;
+    align-items: center;
+    margin-bottom: 2.5%;
+}
+.todo-app h2 img {
+    width: 1.5em;
+    margin-left: 0.625em;
+}
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #edeef0;
+    padding-left: 2.5%;
+    margin-bottom: 2.5%;
+    border-radius: 2em;
+}
+input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 1.25%;
+    font-weight: 0.875em;
+}
+button {
+    border: none;
+    outline: none;
+    background: #ff4625;
+    color: #fff;
+    padding: 1.875% 6.25%;
+    font-size: 0.9375em;
+    border-radius: 2em;
+    cursor: pointer;
+}
+ul li {
+    list-style: none;
+    font-size: 1.0625em;
+    padding: 0.75em 0.5em 0.75em 3.125em;
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+}
+ul li::before {
+    content: '';
+    position: absolute;
+    height: 1.5em;
+    width: 1.5em;
+    border-radius: 50%;
+    background-image: url(unchecked.png);
+    background-size: cover;
+    background-position: center;
+    top: 0.75em;
+    left: 0.5em;
+}
+ul li.checked {
+    color: #555;
+    text-decoration: line-through;
+}
+ul li.checked::before {
+    background-image: url(checked.png);
+}
+ul li span {
+    position: absolute;
+    right: 0;
+    top: 0.3125em;
+    width: 1.5em;
+    height: 1.5em;
+    line-height: 1.5em;
+    color: #555;
+    font-size: 1.375em;
+    text-align: center;
+    border-radius: 50%;
+}
+ul li span:hover {
+    background: #edeef0;
+}
+@media (max-width: 768px) {
+    .todo-app {
+        max-width: 100%;
+    }
+}

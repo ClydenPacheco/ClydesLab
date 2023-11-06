@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+    <head>
+        <script src="angular.min.js"></script>
+    </head>
+    <body>
+        <div ng-controller="inputController">
+            <h1>Dynamic Input</h1>
+            <button ng-click="addInput('HelloWorld')">AddInput</button>
+            <input type="text" ng-model="adddatatothis">
+        </div>
+        <script>
+            angular.module('MyApp',[])
+            .controller('inputController',function($scope){
+                $scope.addInput=function(value){
+                    $scope.adddatatothis=value;
+                }
+            })
+        </script>
+    </body>
+</html>

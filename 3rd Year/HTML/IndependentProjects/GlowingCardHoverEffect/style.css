@@ -1,0 +1,60 @@
+body{
+    background-color: rgb(20,20,20);
+    margin: 0px;
+    padding: 0px;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#cards{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    max-width: 940px;
+    width: calc(100%-20px);
+}
+#cards:hover > .card > .card-border{
+    opacity: 1;
+}
+.card{
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    cursor: pointer;
+    height: 260px;
+    width: 300px;
+    position: relative;
+}
+.card:hover::before{
+    opacity: 1;
+}
+.card::before, .card > .card-border{
+    border-radius: inherit;
+    content: "";
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    position: absolute;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 400ms;
+}
+.card::before{
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),rgba(255, 255, 255, 0.1),transparent 40%);
+    z-index: 3;
+}
+.card > .card-border{
+    background: radial-gradient(400px circle at var(--mouse-x) var(--mouse-y),rgba(255,255,255,0.3),transparent 40%);
+    z-index: 1;
+}
+.card > .card-content{
+    background-color: rgb(23,23,23);
+    height: calc(100% - 2px);
+    width: calc(100% - 2px);
+    border-radius: inherit;
+    margin: 1px;
+    position: relative;
+    z-index: 2;
+}
