@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<student_marks>
+<student>
+	<name>Adin Gomes</name>
+	<roll>01</roll>
+	<marks>67%</marks>
+</student>
+<student>
+	<name>Aldin Mulakar</name>
+	<roll>02</roll>
+	<marks>99%</marks>
+</student>
+<student>
+	<name>Berndan Pinto</name>
+	<roll>03</roll>
+	<marks>78%</marks>
+</student>
+<student>
+	<name>Curt D'souza</name>
+	<roll>04</roll>
+	<marks>72%</marks>
+</student>
+<student>
+	<name>Darren Fernandes</name>
+	<roll>05</roll>
+	<marks>59%</marks>
+</student>
+<student>
+	<name>Elton D'souza</name>
+	<roll>06</roll>
+	<marks>84%</marks>
+</student>
+</student_marks>
