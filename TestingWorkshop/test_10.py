@@ -48,7 +48,7 @@ while page_number <= number_of_pages:
         EC.presence_of_element_located((By.CLASS_NAME, "computers"))
     )
 
-    page_number += 1  # Increase the page number counter
+    page_number += 1
 
 # Print all the collected laptop names across pages
 print(f"All Laptop Names: {all_page_laptop_names}")
