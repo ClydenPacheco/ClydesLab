@@ -1,18 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support import expected_conditions
 import time
 
 # Launch the browser
-chrome_browser = webdriver.Chrome()
-chrome_browser.maximize_window()
+chrome_driver = webdriver.Chrome()
+chrome_driver.maximize_window()
 
 # Open the website in the browser
-chrome_browser.get("https://computer-database.gatling.io/computers")
+chrome_driver.get("https://computer-database.gatling.io/computers")
 
 # Find the page pagination div
-page_pagination_elements = chrome_browser.find_element(By.ID, "pagination")
+page_pagination_elements = chrome_driver.find_element(By.ID, "pagination")
 
 # Find the number of pages
 current_page_list_element = page_pagination_elements.find_element(By.CLASS_NAME, "current")
@@ -29,7 +29,7 @@ all_page_laptop_names = []
 while page_number <= number_of_pages:
     
     # Find the table rows
-    table = chrome_browser.find_element(By.CLASS_NAME, "computers")
+    table = chrome_driver.find_element(By.CLASS_NAME, "computers")
     table_body = table.find_element(By.TAG_NAME, "tbody")
     rows = table_body.find_elements(By.TAG_NAME, "tr")
 
@@ -39,18 +39,19 @@ while page_number <= number_of_pages:
         first_column = all_columns[0].text
         all_page_laptop_names.append(first_column)
 
-    next_page_list_element = chrome_browser.find_element(By.CLASS_NAME, "next")
+    next_page_list_element = chrome_driver.find_element(By.CLASS_NAME, "next")
     next_button = next_page_list_element.find_element(By.TAG_NAME, "a")
     next_button.click()
         
     # Wait for the page to load the next set of results
-    WebDriverWait(chrome_browser, 10).until(
-        EC.presence_of_element_located((By.CLASS_NAME, "computers"))
+    WebDriverWait(chrome_driver, 10).until(
+        expected_conditions.presence_of_element_located((By.CLASS_NAME, "computers"))
     )
 
     page_number += 1
 
 # Print all the collected laptop names across pages
 print(f"All Laptop Names: {all_page_laptop_names}")
-
 time.sleep(1)
+
+chrome_driver.close()

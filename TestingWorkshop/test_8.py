@@ -4,17 +4,17 @@ from selenium.webdriver.common.action_chains import ActionChains
 import time
 
 # Launch the web browser
-chrome_browser = webdriver.Chrome()
-chrome_browser.maximize_window()
+chrome_driver = webdriver.Chrome()
+chrome_driver.maximize_window()
 
 # Load the website in the browser
-chrome_browser.get("https://www.globalsqa.com/demo-site/sliders/#Steps")
+chrome_driver.get("https://www.globalsqa.com/demo-site/sliders/#Steps")
 
 # Find all iframes
-iframes = chrome_browser.find_elements(By.TAG_NAME, "iframe")
+iframes = chrome_driver.find_elements(By.TAG_NAME, "iframe")
 
 # Switch to the required iframe
-chrome_browser.switch_to.frame(iframes[4])
+chrome_driver.switch_to.frame(iframes[4])
 
 # Get the content of the iframe
 #iframe_content = chrome_browser.page_source
@@ -22,13 +22,13 @@ chrome_browser.switch_to.frame(iframes[4])
 #print(iframe_content)
 
 # Wait until the slider is visible
-slider = chrome_browser.find_element(By.ID, "slider")
+slider = chrome_driver.find_element(By.ID, "slider")
 
 # Find the slider handle element
-slider_handle = chrome_browser.find_element(By.CLASS_NAME, "ui-slider-handle")
+slider_handle = chrome_driver.find_element(By.CLASS_NAME, "ui-slider-handle")
 
 # Create an action chain to move the slider
-action = ActionChains(chrome_browser)
+action = ActionChains(chrome_driver)
 
 # Calculate the width of the slider to move it
 slider_width = slider.size['width']
@@ -38,11 +38,11 @@ move_to = slider_width // 2
 action.click_and_hold(slider_handle).move_by_offset(move_to, 0).release().perform()
 
 # Get the value from the input field after moving the slider
-amount_value = chrome_browser.find_element(By.ID, "amount").get_attribute("value")
+amount_value = chrome_driver.find_element(By.ID, "amount").get_attribute("value")
 
 # Print the value
 print(f"The value displayed in the input is: {amount_value}")
 time.sleep (1)
 
 # Close the browser
-chrome_browser.close()
+chrome_driver.close()

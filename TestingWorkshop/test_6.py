@@ -3,14 +3,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 
 # Initialize Chrome browser
-chrome_browser = webdriver.Chrome()
-chrome_browser.maximize_window()
+chrome_driver = webdriver.Chrome()
+chrome_driver.maximize_window()
 
 # Open the webpage
-chrome_browser.get("https://letcode.in/forms")
+chrome_driver.get("https://letcode.in/forms")
 
 # Locate the select element
-select_element = chrome_browser.find_elements(By.TAG_NAME, "select")
+select_element = chrome_driver.find_elements(By.TAG_NAME, "select")
 
 # Create a Select object for the dropdown
 select = Select(select_element[1])
@@ -23,4 +23,4 @@ for option in all_options:
     print(option.text)
 
 # Close the browser
-chrome_browser.close()
+chrome_driver.close()
