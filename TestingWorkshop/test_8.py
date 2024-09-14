@@ -25,14 +25,14 @@ chrome_browser.switch_to.frame(iframes[4])
 slider = chrome_browser.find_element(By.ID, "slider")
 
 # Find the slider handle element
-slider_handle = chrome_browser.find_element(By.XPATH, "//span[contains(@class, 'ui-slider-handle')]")
+slider_handle = chrome_browser.find_element(By.CLASS_NAME, "ui-slider-handle")
 
 # Create an action chain to move the slider
 action = ActionChains(chrome_browser)
 
-# Calculate the width of the slider to move it to the 50% mark
+# Calculate the width of the slider to move it
 slider_width = slider.size['width']
-move_to = slider_width // 2  # Move to the midpoint (50%)
+move_to = slider_width // 2
 
 # Drag the slider handle to the 50% position
 action.click_and_hold(slider_handle).move_by_offset(move_to, 0).release().perform()
