@@ -1,0 +1,2 @@
+Hey there, this text was written by app.js.
+Appending to file form app.js.
