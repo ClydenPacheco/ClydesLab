@@ -122,19 +122,61 @@ class Sort:
         gap = len(array) // 2
         while gap > 0:
             j = gap
-
             while j < len(array):
                 i = j - gap
-
                 while i >= 0:
                     if (order == "asc" and array[i + gap] > array[i]) or \
                        (order == "dec" and array[i + gap] < array[i]): break
                     else: array[i + gap], array[i] = array[i], array[i + gap]
                     i = i - gap
-
                 j += 1
-
             gap = gap // 2
+
+    @staticmethod
+    def __partition(array, order, left, right):
+
+        i = left + 1
+        j = right
+        pivot = array[left]
+
+        while i < j:
+            if order == "asc":
+                while pivot >= array[i] and i < right:
+                    i += 1
+                while pivot < array[j] and j > left:
+                        j -= 1
+            elif order == "dec":
+                while pivot <= array[i] and i < right:
+                    i += 1
+                while pivot > array[j] and j > left:
+                        j -= 1
+            if i < j:
+                array[i], array[j] = array[j], array[i]
+
+        array[left], array[j] = array[j], array[left]
+        return j
+
+    @staticmethod
+    def quick_sort(array: list, order: str = "asc", left: int = 0, right: int = None):
+        """
+        Sorts an list of real numbers using the quick sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+
+        if right is None:
+            right = len(array) - 1
+
+            order = order.lower()
+            Sort.__parameter_validity_check(array, order)
+            
+        if left < right:
+            partition = Sort.__partition(array, order, left, right)
+            Sort.quick_sort(array, order, left, partition - 1)
+            Sort.quick_sort(array, order, partition + 1, right)
 
     @staticmethod
     def __merge(array, order, left, mid, right):
@@ -187,52 +229,6 @@ class Sort:
             Sort.merge_sort(array, order, left, mid)
             Sort.merge_sort(array, order, mid + 1, right)
             Sort.__merge(array, order, left, mid, right)
-    
-    @staticmethod
-    def __partition(array, order, left, right):
-
-        i = left + 1
-        j = right
-        pivot = array[left]
-
-        while i < j:
-            if order == "asc":
-                while pivot >= array[i] and i < right:
-                    i += 1
-                while pivot < array[j] and j > left:
-                        j -= 1
-            elif order == "dec":
-                while pivot <= array[i] and i < right:
-                    i += 1
-                while pivot > array[j] and j > left:
-                        j -= 1
-            if i < j:
-                array[i], array[j] = array[j], array[i]
-
-        array[left], array[j] = array[j], array[left]
-        return j
-
-    @staticmethod
-    def quick_sort(array: list, order: str = "asc", left: int = 0, right: int = None):
-        """
-        Sorts an list of real numbers using the quick sort algorithm.\n
-        The sort is in-place, i.e., the list itself is modified.
-        Args:
-            array (list): The array of integers to be sorted.
-            order (str): Specifies the sorting order.\n 
-                        Use "asc" for ascending order or "dec" for descending order.
-        """
-
-        if right is None:
-            right = len(array) - 1
-
-            order = order.lower()
-            Sort.__parameter_validity_check(array, order)
-            
-        if left < right:
-            partition = Sort.__partition(array, order, left, right)
-            Sort.quick_sort(array, order, left, partition - 1)
-            Sort.quick_sort(array, order, partition + 1, right)
 
     @staticmethod
     def __left_child(index):
