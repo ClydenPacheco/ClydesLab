@@ -3,6 +3,9 @@ import random
 
 class Sort:
 
+    heap = []
+    size = -1
+
     def __init__(self):
         pass
 
@@ -97,9 +100,11 @@ class Sort:
 
     @staticmethod
     def __merge(array, order, left, mid, right):
+
         left_arr = array[left : mid + 1]
         right_arr = array[mid + 1 : right + 1]
         i = j = 0
+
         while i < len(left_arr) and j < len(right_arr):
             if (order == "asc" and left_arr[i] <= right_arr[j]) or \
                (order == "dec" and left_arr[i] >= right_arr[j]):
@@ -111,10 +116,12 @@ class Sort:
                 array[left] = right_arr[j]
                 left += 1
                 j += 1
+
         while i < len(left_arr):
             array[left] = left_arr[i]
             left += 1
             i += 1
+
         while j < len(right_arr):
             array[left] = right_arr[j]
             left += 1
@@ -148,9 +155,11 @@ class Sort:
     
     @staticmethod
     def __partition(array, order, left, right):
+
         i = left + 1
         j = right
         pivot = array[left]
+
         while i < j:
             if order == "asc":
                 while pivot >= array[i] and i < right:
@@ -164,6 +173,7 @@ class Sort:
                         j -= 1
             if i < j:
                 array[i], array[j] = array[j], array[i]
+
         array[left], array[j] = array[j], array[left]
         return j
 
@@ -192,15 +202,69 @@ class Sort:
             Sort.quick_sort(array, order, left, partition - 1)
             Sort.quick_sort(array, order, partition + 1, right)
 
+    @staticmethod
+    def __left_child(index):
+        return (index * 2) + 1
+    
+    @staticmethod
+    def __right_child(index):
+        return (index * 2) + 2
+
+    @staticmethod
+    def __heapify(array, order, index, skip_index):
+
+        current = index
+        left_child_index = Sort.__left_child(index)
+        right_child_index = Sort.__right_child(index)
+
+        if order == "asc":
+            compare = lambda a, b: a > b
+        else:
+            compare = lambda a, b: a < b
+
+        if (left_child_index < skip_index) and compare(array[left_child_index], array[current]):
+            current = left_child_index
+
+        if (right_child_index < skip_index) and compare(array[right_child_index], array[current]):
+            current = right_child_index
+
+        if current != index:
+            array[index], array[current] = array[current], array[index]
+            Sort.__heapify(array, order, current, skip_index)
+    
+    @staticmethod
+    def heap_sort(array, order = "asc"):
+        """
+        Sorts an array of integers using the heap sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list of int): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+
+        order = order.lower()
+        if order != "asc" and order != "dec":
+            raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
+        
+        if Sort.contains_non_integers(array):
+            raise TypeError("The array contains a string.")
+        
+        for index in range(len(array) - 1, -1, -1):
+            Sort.__heapify(array, order, index, len(array))
+
+        for index in range(len(array) - 1, -1, -1):
+            array[0], array[index] = array[index], array[0]
+            Sort.__heapify(array, order, 0, index)
+            
 def main():
 
-    n = 10
+    n = 100000
     INF = sys.maxsize
     NEG_INF = -sys.maxsize - 1
 
-    arr = [random.randint(-100, 100) for _ in range(n)]
-    
-    Sort.merge_sort(arr, "asc")
+    arr = [random.randint(NEG_INF, INF) for _ in range(n)]
+
+    Sort.heap_sort(arr, "asc")
     print(arr)
 
 if __name__ == "__main__":
