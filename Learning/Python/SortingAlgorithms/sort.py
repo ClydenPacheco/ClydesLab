@@ -1,6 +1,3 @@
-import sys
-import random
-
 class Sort:
 
     def __init__(self):
@@ -251,6 +248,18 @@ class Sort:
 
     @staticmethod
     def tim_sort(array: list, order: str = "asc"):
+        """
+        Sorts an list of real numbers using the tim sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+
+        order = order.lower()
+        Sort.__parameter_validity_check(array, order)
+
         n = len(array)
         min_run = Sort.__calculate_min_run(n)
 
@@ -425,17 +434,9 @@ class Sort:
             
 def main():
 
-    n = 100
-    INF = sys.maxsize
-    NEG_INF = -sys.maxsize - 1
-
-    arr = [random.randint(-100, 100) for _ in range(n)]
-    # arr = [random.uniform(0,1) for _ in range(n)]
-    # arr = [15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]
     # arr = [1,3,3.5,4,3,4.7]
-    # arr = [4,3,6,16,8,2]
+    arr = [4,3,6,16,8,2]
     # arr = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
-
     Sort.tim_sort(arr)
     print(arr)
 
