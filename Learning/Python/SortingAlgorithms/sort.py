@@ -25,6 +25,12 @@ class Sort:
                 return True
         return False
     
+    def __exceedes_range(array, lower_bound, upper_boud):
+        for item in array:
+            if item < lower_bound or item > upper_boud:
+                return True
+        return False
+    
     def __parameter_validity_check(array, order):
 
         if order != "asc" and order != "dec":
@@ -36,10 +42,10 @@ class Sort:
     @staticmethod
     def bubble_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of real numbers using the bubble sort algorithm.\n
+        Sorts an list of real numbers using the bubble sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -60,10 +66,10 @@ class Sort:
     @staticmethod
     def selection_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of real numbers using the selection sort algorithm.\n
+        Sorts an list of real numbers using the selection sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -82,10 +88,10 @@ class Sort:
     @staticmethod
     def insertion_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of real numbers using the insertion sort algorithm.\n
+        Sorts an list of real numbers using the insertion sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -131,10 +137,10 @@ class Sort:
     @staticmethod
     def merge_sort(array: list, order: str = "asc", left: int = 0, right: int = None):
         """
-        Sorts an array of real numbers using the merge sort algorithm.\n
+        Sorts an list of real numbers using the merge sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -178,10 +184,10 @@ class Sort:
     @staticmethod
     def quick_sort(array: list, order: str = "asc", left: int = 0, right: int = None):
         """
-        Sorts an array of real numbers using the quick sort algorithm.\n
+        Sorts an list of real numbers using the quick sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -230,10 +236,10 @@ class Sort:
     @staticmethod
     def heap_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of real numbers using the heap sort algorithm.\n
+        Sorts an list of real numbers using the heap sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -250,9 +256,10 @@ class Sort:
     
     def counting_sort(array, order = "asc", exponent = 1):
         """
-        Sorts an array of integers using the counting sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an list of integers using the counting sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -285,10 +292,10 @@ class Sort:
     
     def radix_sort(array, order = "asc"):
         """
-        Sorts an array of positive integers using the radix sort algorithm.\n
+        Sorts an list of positive integers using the radix sort algorithm.\n
         The sort is in-place, i.e., the list itself is modified.
         Args:
-            array (list of int): The array of integers to be sorted.
+            array (list): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
                         Use "asc" for ascending order or "dec" for descending order.
         """
@@ -310,21 +317,54 @@ class Sort:
             Sort.counting_sort(array, order, exponent)
             exponent *= 10
     
+    @staticmethod
+    def bucket_sort(array: list, order: str = "asc"):
+        """
+        Sorts an list of floating point values between 0 and 1 using the radix sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+        
+        order = order.lower()
+        if order != "asc" and order != "dec":
+            raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
 
+        if Sort.__exceedes_range(array, 0, 1):
+            raise ValueError("A list element exceeded the range [0,1]")
+        
+        size = len(array)
+        buckets = [[] for _ in range(size)]
+
+        for item in array:
+            index = int(item * size)
+            buckets[index].append(item)
+
+        for bucket in buckets:
+            Sort.insertion_sort(bucket)
+            
+        index = 0
+        for bucket in buckets:
+            for item in bucket:
+                array[index] = item
+                index += 1
             
 def main():
 
-    n = 15
+    n = 1000
     INF = sys.maxsize
     NEG_INF = -sys.maxsize - 1
 
     arr = [random.randint(0, INF) for _ in range(n)]
+    arr = [random.uniform(0,1) for _ in range(n)]
     arr = [1,3,3.5,4,3,4.7]
     arr = [4,3,6,16,8,2]
+    arr = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
 
-    Sort.radix_sort(arr, "asc")
+    Sort.bucket_sort(arr, "asc")
     print(arr)
-    print()
 
 if __name__ == "__main__":
     main()
