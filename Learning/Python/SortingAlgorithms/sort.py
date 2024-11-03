@@ -3,30 +3,41 @@ import random
 
 class Sort:
 
-    heap = []
-    size = -1
-
     def __init__(self):
         pass
 
     @staticmethod
-    def contains_non_integers(array):
-        """
-        Checks if the input array contains non-integers.
-        Args:
-            array (list of int): The list to check for non-integer elements.
-        Returns:
-            bool: \"True\" if there are non-integers in the array, \"False\" otherwise.
-        """
+    def __contains_non_real_numbers(array):
+        for item in array:
+            if not isinstance(item, (int, float)):
+                return True
+        return False
+    
+    def __contains_non_integers(array):
         for item in array:
             if not isinstance(item, int):
                 return True
         return False
+    
+    def __contains_negative_numbers(array):
+        for item in array:
+            if item < 0:
+                return True
+        return False
+    
+    def __parameter_validity_check(array, order):
+
+        if order != "asc" and order != "dec":
+            raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
+        
+        if Sort.__contains_non_real_numbers(array):
+            raise TypeError("The array contains an invalid type.")
 
     @staticmethod
-    def bubble_sort(array, order = "asc"):
+    def bubble_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of integers using the bubble sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an array of real numbers using the bubble sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
             array (list of int): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
@@ -34,11 +45,7 @@ class Sort:
         """
 
         order = order.lower()
-        if order != "asc" and order != "dec":
-            raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
-        
-        if Sort.contains_non_integers(array):
-            raise TypeError("The array contains a string.")
+        Sort.__parameter_validity_check(array, order)
         
         for i in range(0, len(array)):
             swapped = False
@@ -51,9 +58,10 @@ class Sort:
                 break
     
     @staticmethod
-    def selection_sort(array, order = "asc"):
+    def selection_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of integers using the selection sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an array of real numbers using the selection sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
             array (list of int): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
@@ -61,11 +69,7 @@ class Sort:
         """
 
         order = order.lower()
-        if order != "asc" and order != "dec":
-            raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
-        
-        if Sort.contains_non_integers(array):
-            raise TypeError("The array contains a string.")
+        Sort.__parameter_validity_check(array, order)
         
         for i in range(0, len(array)):
             min_max_num_index = i
@@ -76,9 +80,10 @@ class Sort:
             array[i], array[min_max_num_index] = array[min_max_num_index], array[i]
 
     @staticmethod
-    def insertion_sort(array, order = "asc"):
+    def insertion_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of integers using the insertion sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an array of real numbers using the insertion sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
             array (list of int): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
@@ -86,11 +91,7 @@ class Sort:
         """
 
         order = order.lower()
-        if order != "asc" and order != "dec":
-            raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
-        
-        if Sort.contains_non_integers(array):
-            raise TypeError("The array contains a string.")
+        Sort.__parameter_validity_check(array, order)
         
         for i in range(1,len(array)):
             for j in range(i, 0, -1):
@@ -128,9 +129,10 @@ class Sort:
             j += 1
 
     @staticmethod
-    def merge_sort(array, order = "asc", left = 0, right = None):
+    def merge_sort(array: list, order: str = "asc", left: int = 0, right: int = None):
         """
-        Sorts an array of integers using the merge sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an array of real numbers using the merge sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
             array (list of int): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
@@ -141,11 +143,7 @@ class Sort:
             right = len(array) - 1
 
             order = order.lower()
-            if order != "asc" and order != "dec":
-                raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
-            
-            if Sort.contains_non_integers(array):
-                raise TypeError("The array contains a string.")
+            Sort.__parameter_validity_check(array, order)
         
         mid = left + int((right - left)/2)
         if left < right:
@@ -178,9 +176,10 @@ class Sort:
         return j
 
     @staticmethod
-    def quick_sort(array, order = "asc", left = 0, right = None):
+    def quick_sort(array: list, order: str = "asc", left: int = 0, right: int = None):
         """
-        Sorts an array of integers using the quick sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an array of real numbers using the quick sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
             array (list of int): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
@@ -191,11 +190,7 @@ class Sort:
             right = len(array) - 1
 
             order = order.lower()
-            if order != "asc" and order != "dec":
-                raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
-            
-            if Sort.contains_non_integers(array):
-                raise TypeError("The array contains a string.")
+            Sort.__parameter_validity_check(array, order)
             
         if left < right:
             partition = Sort.__partition(array, order, left, right)
@@ -233,9 +228,65 @@ class Sort:
             Sort.__heapify(array, order, current, skip_index)
     
     @staticmethod
-    def heap_sort(array, order = "asc"):
+    def heap_sort(array: list, order: str = "asc"):
         """
-        Sorts an array of integers using the heap sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Sorts an array of real numbers using the heap sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list of int): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+
+        order = order.lower()
+        Sort.__parameter_validity_check(array, order)
+        
+        for index in range(len(array) - 1, -1, -1):
+            Sort.__heapify(array, order, index, len(array))
+
+        for index in range(len(array) - 1, -1, -1):
+            array[0], array[index] = array[index], array[0]
+            Sort.__heapify(array, order, 0, index)
+    
+    def counting_sort(array, order = "asc", exponent = 1):
+        """
+        Sorts an array of integers using the counting sort algorithm. The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list of int): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+
+        order = order.lower()
+        Sort.__parameter_validity_check(array, order)
+
+        size = len(array)
+        output = [0] * (size)
+        count = [0] * (10)
+
+        for index in range(0, size):
+            count_index = array[index] // exponent
+            count[count_index % 10] += 1
+
+        if order == "asc":
+            for i in range(1, 10):
+                count[i] += count[i - 1]
+        else:
+            for i in range(8, -1, -1):
+                count[i] += count[i + 1]
+
+        for index in range(size - 1, -1, -1):
+            count_index = array[index] // exponent
+            output[count[count_index % 10] - 1] = array[index]
+            count[count_index % 10] -= 1
+
+        for index in range(0, len(array)):
+            array[index] = output[index]
+    
+    def radix_sort(array, order = "asc"):
+        """
+        Sorts an array of positive integers using the radix sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
         Args:
             array (list of int): The array of integers to be sorted.
             order (str): Specifies the sorting order.\n 
@@ -246,26 +297,34 @@ class Sort:
         if order != "asc" and order != "dec":
             raise ValueError("Invalid order value, \"asc\" or \"dec\" was expected.")
         
-        if Sort.contains_non_integers(array):
-            raise TypeError("The array contains a string.")
+        if Sort.__contains_non_integers(array):
+            raise TypeError("The array contains an invalid type.")
         
-        for index in range(len(array) - 1, -1, -1):
-            Sort.__heapify(array, order, index, len(array))
+        if Sort.__contains_negative_numbers(array):
+            raise ValueError("The array contains negative number(s).")
 
-        for index in range(len(array) - 1, -1, -1):
-            array[0], array[index] = array[index], array[0]
-            Sort.__heapify(array, order, 0, index)
+        max_element = max(array)
+        exponent = 1
+
+        while max_element // exponent >= 1:
+            Sort.counting_sort(array, order, exponent)
+            exponent *= 10
+    
+
             
 def main():
 
-    n = 100000
+    n = 15
     INF = sys.maxsize
     NEG_INF = -sys.maxsize - 1
 
-    arr = [random.randint(NEG_INF, INF) for _ in range(n)]
+    arr = [random.randint(0, INF) for _ in range(n)]
+    arr = [1,3,3.5,4,3,4.7]
+    arr = [4,3,6,16,8,2]
 
-    Sort.heap_sort(arr, "asc")
+    Sort.radix_sort(arr, "asc")
     print(arr)
+    print()
 
 if __name__ == "__main__":
     main()
