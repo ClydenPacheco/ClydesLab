@@ -231,6 +231,43 @@ class Sort:
             Sort.__merge(array, order, left, mid, right)
 
     @staticmethod
+    def __calculate_min_run(size):
+        run = 0
+        while size >= 32:
+            run |= size & 1
+            size >>= 1
+        return size + run
+    
+    @staticmethod
+    def __insertion_sort(array, order, left, right):
+        for i in range(left + 1, right + 1):
+            j = i
+            while j > left and (
+                (order == "asc" and array[j] < array[j - 1]) or \
+                (order == "dec" and array[j] > array[j - 1])
+            ):
+                array[j], array[j - 1] = array[j - 1], array[j]
+                j -= 1
+
+    @staticmethod
+    def tim_sort(array: list, order: str = "asc"):
+        n = len(array)
+        min_run = Sort.__calculate_min_run(n)
+
+        for start in range(0, n, min_run):
+            end = min(start + min_run - 1, n - 1)
+            Sort.__insertion_sort(array, order, start, end)
+
+        size = min_run
+        while size < n:
+            for left in range(0, n, 2 * size):
+                mid = min(n - 1, left + size - 1)
+                right = min((left + 2 * size - 1), (n - 1))
+                if mid < right:
+                    Sort.__merge(array, order, left, mid, right)
+            size = 2*size
+
+    @staticmethod
     def __left_child(index):
         return (index * 2) + 1
     
@@ -399,7 +436,7 @@ def main():
     # arr = [4,3,6,16,8,2]
     # arr = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
 
-    Sort.shell_sort(arr)
+    Sort.tim_sort(arr)
     print(arr)
 
 if __name__ == "__main__":
