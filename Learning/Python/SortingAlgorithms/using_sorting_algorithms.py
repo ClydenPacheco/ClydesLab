@@ -5,7 +5,7 @@ from sort import Sort
 
 def main():
 
-    n = 1000000
+    n = 1000
     INF = sys.maxsize
     NEG_INF = -sys.maxsize - 1
 
@@ -38,6 +38,13 @@ def main():
     end_time = time.time()
     time_taken = end_time - start_time
     print(f"Insertion sort: {time_taken} seconds")
+
+    start_time = time.time()
+    arr = all_integer_array.copy()
+    Sort.binary_insertion_sort(arr)
+    end_time = time.time()
+    time_taken = end_time - start_time
+    print(f"Binary Insertion sort: {time_taken} seconds")
 
     start_time = time.time()
     arr = all_integer_array.copy()

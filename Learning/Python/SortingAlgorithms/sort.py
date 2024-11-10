@@ -103,6 +103,42 @@ class Sort:
                     array[j - 1], array[j] = array[j], array[j - 1]
 
     @staticmethod
+    def binary_insertion_sort(array, order="asc"):
+        """
+        Sorts a list of real numbers using the binary insertion sort algorithm.\n
+        The sort is in-place, i.e., the list itself is modified.
+        Args:
+            array (list): The array of integers to be sorted.
+            order (str): Specifies the sorting order.\n 
+                        Use "asc" for ascending order or "dec" for descending order.
+        """
+        order = order.lower()
+        Sort.__parameter_validity_check(array, order)
+
+        if order == "asc":
+            compare = lambda a, b: a < b
+        else:
+            compare = lambda a, b: a > b
+
+        for i in range(1, len(array)):
+
+            value = array[i]
+            left, right = 0, i - 1
+
+            while left <= right:
+                mid = (left + right) // 2
+                if compare(array[mid], value):
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            j = left
+
+            for k in range(i, j, -1):
+                array[k] = array[k - 1]
+                
+            array[j] = value
+
+    @staticmethod
     def shell_sort(array: list, order: str = "asc"):
         """
         Sorts an list of real numbers using the shell sort algorithm.\n
@@ -236,15 +272,69 @@ class Sort:
         return size + run
     
     @staticmethod
-    def __insertion_sort(array, order, left, right):
+    def __find_run(array, start, n):
+
+        end = start + 1
+        if end == n:
+            return end
+        
+        if array[end] >= array[start]:
+            while end < n and array[end] >= array[end - 1]:
+                end += 1
+
+        else:
+            while end < n and array[end] < array[end - 1]:
+                end += 1
+            array[start:end] = reversed(array[start:end])
+            
+        return end
+    
+    @staticmethod
+    def __binary_insertion_sort(array, left, right):
+
         for i in range(left + 1, right + 1):
-            j = i
-            while j > left and (
-                (order == "asc" and array[j] < array[j - 1]) or \
-                (order == "dec" and array[j] > array[j - 1])
-            ):
-                array[j], array[j - 1] = array[j - 1], array[j]
-                j -= 1
+            key = array[i]
+            low, high = left, i
+
+            while low < high:
+                mid = (low + high) // 2
+                if array[mid] > key:
+                    high = mid
+                else:
+                    low = mid + 1
+
+            for j in range(i, low, -1):
+                array[j] = array[j - 1]
+
+            array[low] = key
+
+    @staticmethod
+    def __merge2(array, left, mid, right):
+
+        left_array = array[left:mid + 1]
+        right_array = array[mid + 1:right + 1]
+
+        i = j = 0
+        k = left
+
+        while i < len(left_array) and j < len(right_array):
+            if left_array[i] <= right_array[j]:
+                array[k] = left_array[i]
+                i += 1
+            else:
+                array[k] = right_array[j]
+                j += 1
+            k += 1
+
+        while i < len(left_array):
+            array[k] = left_array[i]
+            i += 1
+            k += 1
+
+        while j < len(right_array):
+            array[k] = right_array[j]
+            j += 1
+            k += 1
 
     @staticmethod
     def tim_sort(array: list, order: str = "asc"):
@@ -261,20 +351,27 @@ class Sort:
         Sort.__parameter_validity_check(array, order)
 
         n = len(array)
+        runs = []
         min_run = Sort.__calculate_min_run(n)
 
-        for start in range(0, n, min_run):
-            end = min(start + min_run - 1, n - 1)
-            Sort.__insertion_sort(array, order, start, end)
-
+        i = 0
+        while i < n:
+            run_end = Sort.__find_run(array, i, n)
+            if run_end - i < min_run:
+                end = min(i + min_run - 1, n - 1)
+                Sort.__binary_insertion_sort(array, i, end)
+                run_end = end + 1
+            runs.append((i, run_end - 1))
+            i = run_end
+        
         size = min_run
         while size < n:
-            for left in range(0, n, 2 * size):
+            for left in range(0, n, size * 2):
                 mid = min(n - 1, left + size - 1)
-                right = min((left + 2 * size - 1), (n - 1))
+                right = min(n - 1, left + 2 * size - 1)
                 if mid < right:
-                    Sort.__merge(array, order, left, mid, right)
-            size = 2*size
+                    Sort.__merge2(array, left, mid, right)
+            size *= 2
 
     @staticmethod
     def __left_child(index):
@@ -437,7 +534,7 @@ def main():
     # arr = [1,3,3.5,4,3,4.7]
     arr = [4,3,6,16,8,2]
     # arr = [0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]
-    Sort.tim_sort(arr)
+    Sort.binary_insertion_sort(arr, "asc")
     print(arr)
 
 if __name__ == "__main__":
